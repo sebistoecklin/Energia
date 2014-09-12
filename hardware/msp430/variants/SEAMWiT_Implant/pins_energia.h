@@ -226,7 +226,7 @@ const uint8_t digital_pin_to_timer[] = {
 	T0B0, 			 /*  11 - P2.1 */
 	T0A1, 			 /*  12 - P2.2 */
 	T0A0, 			 /*  13 - P1.6 */
-	T1A0, 			 /*  14 - P1.7 */
+	T1A0 			 /*  14 - P1.7 */
 
 };
 
@@ -245,7 +245,7 @@ const uint8_t digital_pin_to_port[] = {
 	P2, 		/*  11 - P2.1 */
 	P2, 		/*  12 - P2.2 */
 	P1, 		/*  13 - P1.6 */
-	P1, 		/*  14 - P1.7 */
+	P1			/*  14 - P1.7 */
 
 };
 
@@ -264,71 +264,26 @@ const uint8_t digital_pin_to_bit_mask[] = {
 	BV(1), 		/*  11 - P2.1 */
 	BV(2), 		/*  12 - P2.2 */
 	BV(6), 		/*  13 - P1.6 */
-	BV(7), 		/*  14 - P1.7 */
-
-
-
-	NOT_A_PIN,   /*  1 - VCC */
-	BV(0),       /*  2 - P2.0 */
-	BV(5),       /*  3 - P2.5 */
-	BV(6),       /*  4 - P2.6 */
-	BV(1),       /*  5 - P2.1 */
-	BV(2),       /*  6 - P2.2 */
-	BV(4),       /*  7 - P3.4 */
-	BV(5),       /*  8 - P3.5 */
-	BV(6),       /*  9 - P3.6 */
-	BV(7),       /* 10 - P3.7 */
-	BV(6),       /* 11 - P1.6 */
-	BV(7),       /* 12 - P1.7 */
-	BV(0),       /* 13 - P1.0 */
-	BV(1),       /* 14 - P1.1 */
-	BV(2),       /* 15 - P1.2 */
-	BV(0),       /* 16 - P3.0 */
-	BV(1),       /* 17 - P3.1 */
-	BV(2),       /* 18 - P3.2 */
-	BV(3),       /* 19 - P3.3 */
-	BV(3),       /* 20 - P1.3 */
-	BV(4),       /* 21 - P1.4 */
-	BV(5),       /* 22 - P1.5 */
-	BV(0),       /* 23 - P4.0 */
-	NOT_A_PIN,   /* 24 - GND  */
-	/* LED's 1 through 8 */
-	BV(0),       /* 25 - PJ.0 - LED1 */
-	BV(1),       /* 26 - PJ.1 - LED2 */
-	BV(2),       /* 27 - PJ.2 - LED3 */
-	BV(3),       /* 28 - PJ.3 - LED4 */
-	BV(1),       /* 29 - P4.1 - PUSH2 */
-	BV(7),       /* 30 - P2.7 - ACC_ENABLE / NTC_ENABLE */
+	BV(7)  		/*  14 - P1.7 */
 
 };
 
 const uint32_t digital_pin_to_analog_in[] = {
-	// to change for SEAM-WiT implant
-        NOT_ON_ADC,     /*  dummy   */
-        NOT_ON_ADC,     /*  1 - 3.3V*/
-        NOT_ON_ADC,		/*  2 - P2.0 */
-        NOT_ON_ADC,		/*  3 - P2.5 */
-        NOT_ON_ADC,		/*  4 - P2.6 */
-        NOT_ON_ADC, 	/*  5 - P2.1 */
-        NOT_ON_ADC,		/*  6 - P2.2 */
-        NOT_ON_ADC,		/*  7 - P3.4 */
-        NOT_ON_ADC, 	/*  8 - P3.5 */
-        NOT_ON_ADC, 	/*  9 - P3.6 */
-        NOT_ON_ADC, 	/*  10 - P3.7 */
-        NOT_ON_ADC, 	/*  11 - P1.6 */
-        NOT_ON_ADC, 	/*  12 - P1.7 */
-        0,     			/*  13 - A9 (device analog channel 0) */
-        1,     			/*  14 - A8 (device analog channel 1) */
-        2, 				/*  15 - A7 (device analog channel 2) */
-        12,     		/*  16 - A6 (device analog channel 12) */
-        13, 			/*  17 - A5 (device analog channel 13) */
-        14, 			/*  18 - A4 (device analog channel 14) */
-        15, 			/*  19 - A3 (device analog channel 15) */
-        3, 				/*  20 - A2 (device analog channel 3) */
-        4,  			/*  21 - A1 (device analog channel 4) */
-        5,  			/*  22 - A0 (device analog channel 5) */	
-		NOT_ON_ADC,		/*  23 - P4.0 */
-		NOT_ON_ADC		/*  24 - NC */
+	NOT_ON_ADC,  /*  0 - pin count starts at 1 */
+	0, 			 /*  1 - P1.0 - A0 */
+	1, 			 /*  2 - P1.1 - A1 */
+	2, 			 /*  3 - P1.2 - A2 */
+	3, 			 /*  4 - P1.3 - A3 */
+	4, 			 /*  5 - P1.4 - A4 */
+	5, 			 /*  6 - P1.5 - A5 */
+	NOT_ON_ADC,	 /*  7 - PJ.0 */
+	NOT_ON_ADC,	 /*  8 - PJ.1 */
+	NOT_ON_ADC,	 /*  9 - PJ.3 */
+	NOT_ON_ADC,	 /*  10 - P2.0 */
+	NOT_ON_ADC,  /*  11 - P2.1 */
+	NOT_ON_ADC,  /*  12 - P2.2 */
+	NOT_ON_ADC,  /*  13 - P1.6 */
+	NOT_ON_ADC   /*  14 - P1.7 */
 };
 #endif
 #endif
