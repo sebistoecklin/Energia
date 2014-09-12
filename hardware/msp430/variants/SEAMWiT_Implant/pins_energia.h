@@ -2,13 +2,19 @@
   ************************************************************************
   *	pins_energia.h
   *
-  *	Pin definition functions for FraunchPad
-  *		Copyright (c) 2012 Robert Wessels. All right reserved.
-  *
-  *     Contribution: Stefan Sch
+  *	Pin definition functions for SEAM-WiT Implant Prototype
+  *		Copyright (c) 2014 Sebastian Stöcklin. All right reserved.
   *
   ***********************************************************************
   Derived from:
+
+  pins_arduino.h - Pin definition functions for Arduino
+  Part of Energia - http://www.energia.nu/
+
+  Copyright (c) 2012 Robert Wessels. All right reserved.
+
+  ... and from:
+
   pins_arduino.h - Pin definition functions for Arduino
   Part of Arduino - http://www.arduino.cc/
 
@@ -38,12 +44,12 @@
 
 #if defined(__MSP430_HAS_EUSCI_B0__)
 // to change for SEAM-WiT implant
-static const uint8_t SS      = 20;  /* P1.3 */
-static const uint8_t SCK     = 6;   /* P2.2 */
-static const uint8_t MOSI    = 11;  /* P1.6 aka SIMO */
-static const uint8_t MISO    = 12;  /* P1.7 aka SOMI */
-static const uint8_t TWISDA  = 11;  /* P1.6 */
-static const uint8_t TWISCL  = 12;  /* P1.7 */
+static const uint8_t SS      = 11;  /* only external CS when working as master, real SS not connected */
+static const uint8_t SCK     = 12;  /* P2.2 */
+static const uint8_t MOSI    = 13;  /* P1.6 aka SIMO */
+static const uint8_t MISO    = 14;  /* P1.7 aka SOMI */
+static const uint8_t TWISDA  = 13;  /* P1.6 */
+static const uint8_t TWISCL  = 14;  /* P1.7 */
 #define TWISDA_SET_MODE  (PORT_SELECTION1 | INPUT_PULLUP)
 #define TWISCL_SET_MODE  (PORT_SELECTION1 | INPUT_PULLUP)
 #endif
@@ -57,69 +63,57 @@ static const uint8_t DEBUG_UARTTXD = 2;  /* Transmit Data (TXD) at P2.0 */
 #define DEBUG_UART_MODULE_OFFSET 0x00
 #endif
 
-/* Analog pins */
-/* Note: the Ax assignment is according to energia.nu/Guide_MSP430FraunchPad.html 
-   pin map, not the MSP430FR5739 device Analog channels (also named Ax) */
 
-// to change for SEAM-WiT implant
-static const uint8_t A0  = 22;  /* 22 - P1.5 */
-static const uint8_t A1  = 21;  /* 21 - P1.4 */
-static const uint8_t A2  = 20;  /* 20 - P1.3 */
-static const uint8_t A3  = 19; /* 19 - P3.3 */
-static const uint8_t A4  = 18; /* 18 - P3.2 */
-static const uint8_t A5  = 17; /* 17 - P3.1 */
-static const uint8_t A6  = 16; /* 16 - P3.0 */
-static const uint8_t A7  = 15;  /* 15 - P1.2 */
-static const uint8_t A8  = 14;  /* 14 - P1.1 */
-static const uint8_t A9  = 13;  /* 13 - P1.0 */
+/* Analog pins */
+/* Note: In contrast to other Energia pin mappings, the Ax names correspond to those of the datasheet */
+
+static const uint8_t A0  = 1;	/* 1 - P1.0 */
+static const uint8_t A1  = 2;   /* 2 - P1.1 */
+static const uint8_t A2  = 3;   /* 3 - P1.2 */
+static const uint8_t A3  = 4;   /* 4 - P1.3 */
+static const uint8_t A4  = 5;   /* 5 - P1.4 */
+static const uint8_t A5  = 6;   /* 6 - P1.5 */
+
+// still there from Fraunchpad pin mapping (maybe there is a need for a change):
 static const uint8_t A10 = 128 + 10; //Special this is device's internal temp sensor */
 static const uint8_t A11 = 128 + 11; //Special this is Vcc/2 */
 
-/* special pin functions */
 
-// to change for SEAM-WiT implant
-static const uint8_t ACC_X  = 12; /* (A6) 16 - P3.0 */
-static const uint8_t ACC_Y  = 13; /* (A5) 17 - P3.1 */
-static const uint8_t ACC_Z  = 14; /* (A4) 18 - P3.0 */
-static const uint8_t ACC_ENABLE = 30; /* 30 - P2.7 */
-static const uint8_t NTC_ENABLE = 30; /* 30 - P2.7 */
+/* special pin functions (corresponding to schematic names) */
+
+static const uint8_t VcoilSlow 		= 1;
+static const uint8_t VrefPWM 		= 2;
+static const uint8_t SlicedData		= 3;
+static const uint8_t Vshunt			= 4;
+static const uint8_t VhvMeas 		= 5;
+static const uint8_t Modulation		= 6;
+static const uint8_t BoostDisable 	= 7;
+static const uint8_t PowerData	 	= 8;
+static const uint8_t PowerEnable	= 9;
+static const uint8_t MSPTX 			= 10;
+static const uint8_t MSPRX	 		= 11;
+static const uint8_t SCK 			= 12;
+static const uint8_t MOSI		 	= 13;
+static const uint8_t MISO	 		= 14;
 
 
-// Pin names based on the TI port and pin names
+/* Pin names based on the TI port and pin names */
 
-// to change for SEAM-WiT implant
+static const uint8_t P1_0 = 1;
+static const uint8_t P1_1 = 2;
+static const uint8_t P1_2 = 3;
+static const uint8_t P1_3 = 4;
+static const uint8_t P1_4 = 5;
+static const uint8_t P1_5 = 6;
+static const uint8_t PJ_0 = 7;
+static const uint8_t PJ_1 = 8;
+static const uint8_t PJ_3 = 9;
+static const uint8_t P2_0 = 10;
+static const uint8_t P2_1 = 11;
+static const uint8_t P2_2 = 12;
+static const uint8_t P1_6 = 13;
+static const uint8_t P1_7 = 14;
 
-static const uint8_t P2_0 = 2;
-static const uint8_t P2_5 = 3;
-static const uint8_t P2_6 = 4;
-static const uint8_t P2_1 = 5;
-static const uint8_t P2_2 = 6;
-static const uint8_t P3_4 = 7;
-static const uint8_t P3_5 = 8;
-static const uint8_t P3_6 = 9;
-static const uint8_t P3_7 = 10;
-static const uint8_t P1_6 = 11;
-static const uint8_t P1_7 = 12;
-static const uint8_t P1_0 = 13;
-static const uint8_t P1_1 = 14;
-static const uint8_t P1_2 = 15;
-static const uint8_t P3_0 = 16;
-static const uint8_t P3_1 = 17;
-static const uint8_t P3_2 = 18;
-static const uint8_t P3_3 = 19;
-static const uint8_t P1_3 = 20;
-static const uint8_t P1_4 = 21;
-static const uint8_t P1_5 = 22;
-static const uint8_t P4_0 = 23;
-
-static const uint8_t LED1 = 25;
-static const uint8_t LED2 = 26;
-static const uint8_t LED3 = 27;
-static const uint8_t LED4 = 28;
-static const uint8_t LED5 = 7;
-static const uint8_t LED6 = 8;
-static const uint8_t LED7 = 9;
-static const uint8_t LED8 = 10;
 
 #ifdef ARDUINO_MAIN
 
@@ -218,78 +212,62 @@ const uint16_t port_to_sel1[] = {
  */
 
 const uint8_t digital_pin_to_timer[] = {
-	// to change for SEAM-WiT implant
-	NOT_ON_TIMER,  /*  0 - pin count starts at 1 */
-	NOT_ON_TIMER,  /*  1 - VCC */
-	T2B0,          /*  2 - P2.0 */
-	T0B0,          /*  3 - P2.5 */
-	T1B0,          /*  4 - P2.6 */
-	T2B1,          /*  5 - P2.1 */
-	T2B2,          /*  6 - P2.2 */
-	T1B1,          /*  7 - P3.4 */
-	T1B2,          /*  8 - P3.5 */
-	T2B1,          /*  9 - P3.6 */
-	T2B2,          /* 10 - P3.7 */
-	T1B1,          /* 11 - P1.6 */
-	T1B2,          /* 12 - P1.7 */
-	T0A1,          /* 13 - P1.0 */
-	T0A2,          /* 14 - P1.1 */
-	T1A1,          /* 15 - P1.2 */
-	NOT_ON_TIMER,  /* 16 - P3.0 */
-	NOT_ON_TIMER,  /* 17 - P3.1 */
-	NOT_ON_TIMER,  /* 18 - P3.2 */
-	NOT_ON_TIMER,  /* 19 - P3.3 */
-	T1A2,          /* 20 - P1.3 */
-	T0B1,          /* 21 - P1.4 */
-	T0B2,          /* 22 - P1.5 */
-	T2B0,          /* 23 - P4.0 */
-	NOT_ON_TIMER,  /* 24 - GND  */
-	/* LED's */
-	NOT_ON_TIMER,  /* 25 PJ.0 - LED1 */
-	NOT_ON_TIMER,  /* 26 PJ.1 - LED2 */
-	NOT_ON_TIMER,  /* 27 PJ.2 - LED3 */
-	NOT_ON_TIMER,  /* 28 PJ.3 - LED4 */
+	NOT_ON_TIMER,  	 /*  0 - pin count starts at 1 */
+	T0A1, 			 /*  1 - P1.0 */
+	T0A2, 			 /*  2 - P1.1 */
+	T1A1, 			 /*  3 - P1.2 */
+	T1A2, 			 /*  4 - P1.3 */
+	T0B1, 			 /*  5 - P1.4 */
+	T0B2, 			 /*  6 - P1.5 */
+	NOT_ON_TIMER,	 /*  7 - PJ.0 */
+	NOT_ON_TIMER,	 /*  8 - PJ.1 */
+	NOT_ON_TIMER,	 /*  9 - PJ.3 */
+	NOT_ON_TIMER,	 /*  10 - P2.0 */
+	T0B0, 			 /*  11 - P2.1 */
+	T0A1, 			 /*  12 - P2.2 */
+	T0A0, 			 /*  13 - P1.6 */
+	T1A0, 			 /*  14 - P1.7 */
+
 };
 
 const uint8_t digital_pin_to_port[] = {
-	// to change for SEAM-WiT implant
-	NOT_A_PIN,   /*  0 - pin count starts at 1 */
-	NOT_A_PIN,   /*  1 - VCC */
-	P2,          /*  2 - P2.0 */
-	P2,          /*  3 - P2.5 */
-	P2,          /*  4 - P2.6 */
-	P2,          /*  5 - P2.1 */
-	P2,          /*  6 - P2.2 */
-	P3,          /*  7 - P3.4 */
-	P3,          /*  8 - P3.5 */
-	P3,          /*  9 - P3.6 */
-	P3,          /* 10 - P3.7 */
-	P1,          /* 11 - P1.6 */
-	P1,          /* 12 - P1.7 */
-	P1,          /* 13 - P1.0 */
-	P1,          /* 14 - P1.1 */
-	P1,          /* 15 - P1.2 */
-	P3,          /* 16 - P3.0 */
-	P3,          /* 17 - P3.1 */
-	P3,          /* 18 - P3.2 */
-	P3,          /* 19 - P3.3 */
-	P1,          /* 20 - P1.3 */
-	P1,          /* 21 - P1.4 */
-	P1,          /* 22 - P1.5 */
-	P4,          /* 23 - P4.0 */
-	NOT_A_PIN,   /* 24 - GND */
-	/* LED's */
-	PJ,          /* 25 PJ.0 - LED1 */
-	PJ,          /* 26 PJ.1 - LED2 */
-	PJ,          /* 27 PJ.2 - LED3 */
-	PJ,          /* 28 PJ.3 - LED4 */
-	P4,          /* 29 P4.1 - PUSH2 */
-	P2,          /* 30 P2.7 - ACC_ENABLE / NTC_ENABLE */
+	NOT_A_PIN, 	/*  0 - pin count starts at 1 */
+	P1,			/*  1 - P1.0 */
+	P1, 		/*  2 - P1.1 */
+	P1, 		/*  3 - P1.2 */
+	P1, 		/*  4 - P1.3 */
+	P1, 		/*  5 - P1.4 */
+	P1, 		/*  6 - P1.5 */
+	PJ,			/*  7 - PJ.0 */
+	PJ,	 		/*  8 - PJ.1 */
+	PJ,	 		/*  9 - PJ.3 */
+	P2,	 		/*  10 - P2.0 */
+	P2, 		/*  11 - P2.1 */
+	P2, 		/*  12 - P2.2 */
+	P1, 		/*  13 - P1.6 */
+	P1, 		/*  14 - P1.7 */
+
 };
 
 const uint8_t digital_pin_to_bit_mask[] = {
-	// to change for SEAM-WiT implant
-	NOT_A_PIN,   /*  0 - pin count starts at 1 */
+	NOT_A_PIN,  /*  0 - pin count starts at 1 */
+	BV(0),		/*  1 - P1.0 */
+	BV(1), 		/*  2 - P1.1 */
+	BV(2), 		/*  3 - P1.2 */
+	BV(3), 		/*  4 - P1.3 */
+	BV(4), 		/*  5 - P1.4 */
+	BV(5), 		/*  6 - P1.5 */
+	BV(0),		/*  7 - PJ.0 */
+	BV(1),	 	/*  8 - PJ.1 */
+	BV(3),	 	/*  9 - PJ.3 */
+	BV(0),	 	/*  10 - P2.0 */
+	BV(1), 		/*  11 - P2.1 */
+	BV(2), 		/*  12 - P2.2 */
+	BV(6), 		/*  13 - P1.6 */
+	BV(7), 		/*  14 - P1.7 */
+
+
+
 	NOT_A_PIN,   /*  1 - VCC */
 	BV(0),       /*  2 - P2.0 */
 	BV(5),       /*  3 - P2.5 */
