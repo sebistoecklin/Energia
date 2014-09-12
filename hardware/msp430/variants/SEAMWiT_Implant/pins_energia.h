@@ -56,8 +56,8 @@ static const uint8_t TWISCL  = 14;  /* P1.7 */
 
 #if defined(__MSP430_HAS_EUSCI_A0__)
 // to change for SEAM-WiT implant
-static const uint8_t DEBUG_UARTRXD = 5;  /* Receive  Data (RXD) at P2.1 */
-static const uint8_t DEBUG_UARTTXD = 2;  /* Transmit Data (TXD) at P2.0 */
+static const uint8_t DEBUG_UARTRXD = 11;  /* Receive  Data (RXD) at P2.1 */
+static const uint8_t DEBUG_UARTTXD = 10;  /* Transmit Data (TXD) at P2.0 */
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION1 | INPUT)
 #define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION1 | OUTPUT)
 #define DEBUG_UART_MODULE_OFFSET 0x00
@@ -92,9 +92,6 @@ static const uint8_t PowerData	 	= 8;
 static const uint8_t PowerEnable	= 9;
 static const uint8_t MSPTX 			= 10;
 static const uint8_t MSPRX	 		= 11;
-static const uint8_t SCK 			= 12;
-static const uint8_t MOSI		 	= 13;
-static const uint8_t MISO	 		= 14;
 
 
 /* Pin names based on the TI port and pin names */
