@@ -81,3 +81,13 @@ lpmsp430fr5969.build.variant=launchpad_fr5969
 lpmsp430fr5969.upload.maximum_ram_size=1024
 
 ##############################################################
+seamwitimplant.name=SEAM-WiT Implant w/ MSP430FR5738
+seamwitimplant.upload.protocol=rf2500
+seamwitimplant.upload.maximum_size=15872
+seamwitimplant.build.mcu=msp430fr57389
+seamwitimplant.build.f_cpu=16000000L
+seamwitimplant.build.core=msp430
+seamwitimplant.build.variant=SEAMWiT_Implant
+seamwitimplant.upload.maximum_ram_size=1024
+
+##############################################################
