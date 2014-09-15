@@ -348,7 +348,7 @@ const uint8_t digital_pin_to_bit_mask[] = {
 
 const uint32_t digital_pin_to_analog_in[] = {
 	NOT_ON_ADC,  /*  0 - pin count starts at 1 */
-	0			 /*  1 - P1.0 */
+	0,			 /*  1 - P1.0 */
 	1,			 /*  2 - P1.1 */
 	2,			 /*  3 - P1.2 */
 	12,			 /*  4 - P3.0 */
@@ -379,6 +379,7 @@ const uint32_t digital_pin_to_analog_in[] = {
 	7,			 /* 29 - P2.4 */	
 	NOT_ON_ADC,	 /* 30 - PJ.4 */
 	NOT_ON_ADC	 /* 31 - PJ.5 */
+
 };
 #endif
 #endif
