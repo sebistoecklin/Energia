@@ -91,3 +91,13 @@ seamwitimplant.build.variant=SEAMWiT_Implant
 seamwitimplant.upload.maximum_ram_size=1024
 
 ##############################################################
+seamwitimplant.name=SEAM-WiT Reader Unit v2 w/ MSP430FR5739
+seamwitimplant.upload.protocol=rf2500
+seamwitimplant.upload.maximum_size=15872
+seamwitimplant.build.mcu=msp430fr5739
+seamwitimplant.build.f_cpu=16000000L
+seamwitimplant.build.core=msp430
+seamwitimplant.build.variant=SEAMWiT_ReaderUnit_v2
+seamwitimplant.upload.maximum_ram_size=1024
+
+##############################################################

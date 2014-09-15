@@ -43,7 +43,6 @@
 #endif
 
 #if defined(__MSP430_HAS_EUSCI_B0__)
-// to change for SEAM-WiT implant
 static const uint8_t SS      = 11;  /* only external CS when working as master, real SS not connected */
 static const uint8_t SCK     = 12;  /* P2.2 */
 static const uint8_t MOSI    = 13;  /* P1.6 aka SIMO */
@@ -55,7 +54,6 @@ static const uint8_t TWISCL  = 14;  /* P1.7 */
 #endif
 
 #if defined(__MSP430_HAS_EUSCI_A0__)
-// to change for SEAM-WiT implant
 static const uint8_t DEBUG_UARTRXD = 11;  /* Receive  Data (RXD) at P2.1 */
 static const uint8_t DEBUG_UARTTXD = 10;  /* Transmit Data (TXD) at P2.0 */
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION1 | INPUT)

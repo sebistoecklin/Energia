@@ -37,119 +37,113 @@
 #endif
 
 #if defined(__MSP430_HAS_EUSCI_B0__)
-static const uint8_t SS      = 20;  /* P1.3 */
-static const uint8_t SCK     = 6;   /* P2.2 */
-static const uint8_t MOSI    = 11;  /* P1.6 aka SIMO */
-static const uint8_t MISO    = 12;  /* P1.7 aka SOMI */
-static const uint8_t TWISDA  = 11;  /* P1.6 */
-static const uint8_t TWISCL  = 12;  /* P1.7 */
+static const uint8_t SS      = 22;  /* P2.1 - only external CS when working as master, real SS not connected */
+static const uint8_t SCK     = 21;  /* P2.2 */
+static const uint8_t MOSI    = 26;  /* P1.6 aka SIMO */
+static const uint8_t MISO    = 27;  /* P1.7 aka SOMI */
+static const uint8_t TWISDA  = 26;  /* P1.6 */
+static const uint8_t TWISCL  = 27;  /* P1.7 */
 #define TWISDA_SET_MODE  (PORT_SELECTION1 | INPUT_PULLUP)
 #define TWISCL_SET_MODE  (PORT_SELECTION1 | INPUT_PULLUP)
 #endif
 
 #if defined(__MSP430_HAS_EUSCI_A0__)
-static const uint8_t DEBUG_UARTRXD = 5;  /* Receive  Data (RXD) at P2.1 */
-static const uint8_t DEBUG_UARTTXD = 2;  /* Transmit Data (TXD) at P2.0 */
+static const uint8_t DEBUG_UARTRXD = 20;  /* Receive  Data (RXD) at P2.1 */
+static const uint8_t DEBUG_UARTTXD = 19;  /* Transmit Data (TXD) at P2.0 */
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION1 | INPUT)
 #define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION1 | OUTPUT)
 #define DEBUG_UART_MODULE_OFFSET 0x00
 #endif
 
 /* Analog pins */
-/* Note: the Ax assignment is according to energia.nu/Guide_MSP430FraunchPad.html 
-   pin map, not the MSP430FR5739 device Analog channels (also named Ax) */
+/* Note: In contrast to other Energia pin mappings, the Ax names correspond to those of the datasheet */
 
-static const uint8_t A0  = 22;  /* 22 - P1.5 */
-static const uint8_t A1  = 21;  /* 21 - P1.4 */
-static const uint8_t A2  = 20;  /* 20 - P1.3 */
-static const uint8_t A3  = 19; /* 19 - P3.3 */
-static const uint8_t A4  = 18; /* 18 - P3.2 */
-static const uint8_t A5  = 17; /* 17 - P3.1 */
-static const uint8_t A6  = 16; /* 16 - P3.0 */
-static const uint8_t A7  = 15;  /* 15 - P1.2 */
-static const uint8_t A8  = 14;  /* 14 - P1.1 */
-static const uint8_t A9  = 13;  /* 13 - P1.0 */
-static const uint8_t A10 = 128 + 10; //Special this is device's internal temp sensor */
-static const uint8_t A11 = 128 + 11; //Special this is Vcc/2 */
+static const uint8_t A0   = 1;   /* 1 - P1.0 */
+static const uint8_t A1   = 2;   /* 2 - P1.1 */
+static const uint8_t A2   = 3;   /* 3 - P1.2 */
+static const uint8_t A3   = 8;   /* 8 - P1.3 */
+static const uint8_t A4   = 9;   /* 9 - P1.4 */
+static const uint8_t A5   = 10;  /* 10 - P1.5 */
+static const uint8_t A6   = 28;  /* 28 - P2.3 */
+static const uint8_t A7   = 29;  /* 29 - P2.4 */
+static const uint8_t A12  = 4;   /* 4 - P3.0 */
+static const uint8_t A13  = 5;   /* 5 - P3.1 */
+static const uint8_t A14  = 6;   /* 6 - P3.2 */
+static const uint8_t A15  = 7;   /* 5 - P3.3 */
 
-/* 3-axes accelerometer pins */
-static const uint8_t ACC_X  = 12; /* (A6) 16 - P3.0 */
-static const uint8_t ACC_Y  = 13; /* (A5) 17 - P3.1 */
-static const uint8_t ACC_Z  = 14; /* (A4) 18 - P3.0 */
-static const uint8_t ACC_ENABLE = 30; /* 30 - P2.7 */
-static const uint8_t NTC_ENABLE = 30; /* 30 - P2.7 */
+// still there from Fraunchpad pin mapping (maybe there is a need for a change):
+//static const uint8_t A10 = 128 + 10; //Special this is device's internal temp sensor */
+//static const uint8_t A11 = 128 + 11; //Special this is Vcc/2 */
 
-/* Layout of the 2x 12 pin headers.
-   Header is _not_ compatible with LaunchPad!
 
-   All pins support digitalWrite() and attachInterrupt()
-   Pins marked with PWM support anaglogWrite()
-   Pins marked with Ax support analogRead()
+/* Addtional special pin functions (corresponding to schematic names, not including SPI & UART pins => see above) */
 
-                                          +---\/---+
-                                   VCC   1|        |24  GND
-                   (UARTTX)        P2.0  2|        |23  P4.0
-                                   P2.5  3|        |22  P1.5        (A0) (PWM)
-                                   P2.6  4|        |21  P1.4        (A1) (PWM)
-(PWM)              (UARTRX)        P2.1  5|        |20  P1.3  (SS)  (A2) (PWM)
-(PWM)        (SCK)                 P2.2  6|        |19  P3.3        (A3)
-(PWM)                      (LED5)  P3.4  7|        |18  P3.2        (A4)
-(PWM)                      (LED6)  P3.5  8|        |17  P3.1        (A5)
-(PWM)                      (LED7)  P3.6  9|        |16  P3.0        (A6)
-(PWM)                      (LED8)  P3.7 10|        |15  P1.2        (A7) (PWM)
-(PWM) (SDA) (MOSI)                 P1.6 11|        |14  P1.1        (A8) (PWM)
-(PWM) (SCL) (MISO)                 P1.7 12|        |13  P1.0        (A9) (PWM)
-                                          +--------+
+static const uint8_t VcoilSlow 	 	 =  1;		/* 1 - P1.0 */
+static const uint8_t Cap1 		 	 =  2;		/* 2 - P1.1 */
+static const uint8_t Cap2 		 	 =  3;		/* 3 - P1.2 */
+static const uint8_t Cap3 		 	 =  4;		/* 4 - P3.0 */
+static const uint8_t Cap4 		 	 =  5;		/* 5 - P3.1 */
+static const uint8_t Cap5 			 =  6;		/* 6 - P3.2 */
+static const uint8_t Cap6 			 =  7;		/* 7 - P3.3 */
+static const uint8_t VampMeas 		 =  8;		/* 8 - P1.3 */
+static const uint8_t VbatMeas 		 =  9;		/* 9 - P1.4 */
+static const uint8_t Vzc 			 = 10;		/* 10 - P1.5 */
+static const uint8_t R1 			 = 11;		/* 11 - PJ.0 */
+static const uint8_t R2 			 = 12;		/* 12 - PJ.1 */
+static const uint8_t R3 			 = 13;		/* 13 - PJ.2 */
+static const uint8_t R4 			 = 14;		/* 14 - PJ.3 */
+static const uint8_t R5 			 = 15;		/* 15 - P4.0 */
+static const uint8_t R6 			 = 16;		/* 16 - P4.1 */
+static const uint8_t BuckEnable 	 = 17;		/* 17 - P2.5 */
+static const uint8_t LDOEnable 		 = 18;		/* 18 - P2.6 */
 
-                                               ----+
-                                                   |25  LED1
-                                                   |26  LED2
-                     Extra LED's and S2 aka PUSH2  |27  LED3
-                                                   |28  LED4
-                                                   |29  PUSH2
-                                               ----+
-*/
+static const uint8_t PWM 			 = 22;		/* 22 - P3.4 */
+static const uint8_t ClippingControl = 23;		/* 23 - P3.5 */
+static const uint8_t CCEnable 		 = 24;		/* 24 - P3.6 */
+static const uint8_t DownlinkCS 	 = 25;		/* 25 - P3.7 */
 
-// Pin names based on the silkscreen
-//
+static const uint8_t SlicedData 	 = 28;		/* 28 - P2.3 */
+static const uint8_t VDDdata 		 = 29;		/* 29 - P2.4 */	
+static const uint8_t LED1 			 = 30;		/* 30 - PJ.4 */
+static const uint8_t LED2 			 = 31;		/* 31 - PJ.5 */
 
-static const uint8_t P2_0 = 2;
-static const uint8_t P2_5 = 3;
-static const uint8_t P2_6 = 4;
-static const uint8_t P2_1 = 5;
-static const uint8_t P2_2 = 6;
-static const uint8_t P3_4 = 7;
-static const uint8_t P3_5 = 8;
-static const uint8_t P3_6 = 9;
-static const uint8_t P3_7 = 10;
-static const uint8_t P1_6 = 11;
-static const uint8_t P1_7 = 12;
-static const uint8_t P1_0 = 13;
-static const uint8_t P1_1 = 14;
-static const uint8_t P1_2 = 15;
-static const uint8_t P3_0 = 16;
-static const uint8_t P3_1 = 17;
-static const uint8_t P3_2 = 18;
-static const uint8_t P3_3 = 19;
-static const uint8_t P1_3 = 20;
-static const uint8_t P1_4 = 21;
-static const uint8_t P1_5 = 22;
-static const uint8_t P4_0 = 23;
 
-static const uint8_t LED1 = 25;
-static const uint8_t LED2 = 26;
-static const uint8_t LED3 = 27;
-static const uint8_t LED4 = 28;
-static const uint8_t LED5 = 7;
-static const uint8_t LED6 = 8;
-static const uint8_t LED7 = 9;
-static const uint8_t LED8 = 10;
+/* Pin names based on the TI port and pin names */
+
+static const uint8_t P1_0 =  1;		/*  1 - P1.0 */
+static const uint8_t P1_1 =  2;		/*  2 - P1.1 */
+static const uint8_t P1_2 =  3;		/*  3 - P1.2 */
+static const uint8_t P3_0 =  4;		/*  4 - P3.0 */
+static const uint8_t P3_1 =  5;		/*  5 - P3.1 */
+static const uint8_t P3_2 =  6;		/*  6 - P3.2 */
+static const uint8_t P3_3 =  7;		/*  7 - P3.3 */
+static const uint8_t P1_3 =  8;		/*  8 - P1.3 */
+static const uint8_t P1_4 =  9;		/*  9 - P1.4 */
+static const uint8_t P1_5 = 10;		/* 10 - P1.5 */
+static const uint8_t PJ_0 = 11;		/* 11 - PJ.0 */
+static const uint8_t PJ_1 = 12;		/* 12 - PJ.1 */
+static const uint8_t PJ_2 = 13;		/* 13 - PJ.2 */
+static const uint8_t PJ_3 = 14;		/* 14 - PJ.3 */
+static const uint8_t P4_0 = 15;		/* 15 - P4.0 */
+static const uint8_t P4_1 = 16;		/* 16 - P4.1 */
+static const uint8_t P2_5 = 17;		/* 17 - P2.5 */
+static const uint8_t P2_6 = 18;		/* 18 - P2.6 */
+static const uint8_t P2_0 = 19;		/* 19 - P2.0 */
+static const uint8_t P2_1 = 20;		/* 20 - P2.1 */
+static const uint8_t P2_2 = 21;		/* 21 - P2.2 */
+static const uint8_t P3_4 = 22;		/* 22 - P3.4 */
+static const uint8_t P3_5 = 23;		/* 23 - P3.5 */
+static const uint8_t P3_6 = 24;		/* 24 - P3.6 */
+static const uint8_t P3_7 = 25;		/* 25 - P3.7 */
+static const uint8_t P1_6 = 26;		/* 26 - P1.6 */
+static const uint8_t P1_7 = 27;		/* 27 - P1.7 */
+static const uint8_t P2_3 = 28;		/* 28 - P2.3 */
+static const uint8_t P2_4 = 29;		/* 29 - P2.4 */	
+static const uint8_t PJ_4 = 30;		/* 30 - PJ.4 */
+static const uint8_t PJ_5 = 31;		/* 31 - PJ.5 */
+
+
 /* For LaunchPad compatability */
-static const uint8_t RED_LED = 25;
-static const uint8_t GREEN_LED = 28;
-
-static const uint8_t PUSH1 = 23;
-static const uint8_t PUSH2 = 29;
 static const uint8_t TEMPSENSOR = 128 + 10;
 
 #ifdef ARDUINO_MAIN
@@ -245,135 +239,146 @@ const uint16_t port_to_sel1[] = {
 };
 
 const uint8_t digital_pin_to_timer[] = {
-	NOT_ON_TIMER,  /*  0 - pin count starts at 1 */
-	NOT_ON_TIMER,  /*  1 - VCC */
-	T2B0,          /*  2 - P2.0 */
-	T0B0,          /*  3 - P2.5 */
-	T1B0,          /*  4 - P2.6 */
-	T2B1,          /*  5 - P2.1 */
-	T2B2,          /*  6 - P2.2 */
-	T1B1,          /*  7 - P3.4 */
-	T1B2,          /*  8 - P3.5 */
-	T2B1,          /*  9 - P3.6 */
-	T2B2,          /* 10 - P3.7 */
-	T1B1,          /* 11 - P1.6 */
-	T1B2,          /* 12 - P1.7 */
-	T0A1,          /* 13 - P1.0 */
-	T0A2,          /* 14 - P1.1 */
-	T1A1,          /* 15 - P1.2 */
-	NOT_ON_TIMER,  /* 16 - P3.0 */
-	NOT_ON_TIMER,  /* 17 - P3.1 */
-	NOT_ON_TIMER,  /* 18 - P3.2 */
-	NOT_ON_TIMER,  /* 19 - P3.3 */
-	T1A2,          /* 20 - P1.3 */
-	T0B1,          /* 21 - P1.4 */
-	T0B2,          /* 22 - P1.5 */
-	T2B0,          /* 23 - P4.0 */
-	NOT_ON_TIMER,  /* 24 - GND  */
-	/* LED's */
-	NOT_ON_TIMER,  /* 25 PJ.0 - LED1 */
-	NOT_ON_TIMER,  /* 26 PJ.1 - LED2 */
-	NOT_ON_TIMER,  /* 27 PJ.2 - LED3 */
-	NOT_ON_TIMER,  /* 28 PJ.3 - LED4 */
+	NOT_ON_TIMER,   /*  0 - pin count starts at 1 */
+	T0A1,			/*  1 - P1.0 */
+	T0A2,			/*  2 - P1.1 */
+	T1A1,			/*  3 - P1.2 */
+	NOT_ON_TIMER,	/*  4 - P3.0 */
+	NOT_ON_TIMER,	/*  5 - P3.1 */
+	NOT_ON_TIMER,	/*  6 - P3.2 */
+	NOT_ON_TIMER,	/*  7 - P3.3 */
+	T1A2,			/*  8 - P1.3 */
+	T0B1,			/*  9 - P1.4 */
+	T0B2,			/* 10 - P1.5 */
+	NOT_ON_TIMER,	/* 11 - PJ.0 */
+	NOT_ON_TIMER,	/* 12 - PJ.1 */
+	NOT_ON_TIMER,	/* 13 - PJ.2 */
+	NOT_ON_TIMER,	/* 14 - PJ.3 */
+	NOT_ON_TIMER,	/* 15 - P4.0 */
+	NOT_ON_TIMER,	/* 16 - P4.1 */
+	T0B0,			/* 17 - P2.5 */
+	T1B0,			/* 18 - P2.6 */
+	T2B0,			/* 19 - P2.0 */
+	T2B1,			/* 20 - P2.1 */
+	T2B2,			/* 21 - P2.2 */
+	T1B1,			/* 22 - P3.4 */
+	T1B2,			/* 23 - P3.5 */
+	T2B1,			/* 24 - P3.6 */
+	T2B2,			/* 25 - P3.7 */
+	T1B1,			/* 26 - P1.6 */
+	T1B2,			/* 27 - P1.7 */
+	T0A0,			/* 28 - P2.3 */
+	T1A0,			/* 29 - P2.4 */	
+	NOT_ON_TIMER,	/* 30 - PJ.4 */
+	NOT_ON_TIMER,	/* 31 - PJ.5 */
+
 };
 
 const uint8_t digital_pin_to_port[] = {
 	NOT_A_PIN,   /*  0 - pin count starts at 1 */
-	NOT_A_PIN,   /*  1 - VCC */
-	P2,          /*  2 - P2.0 */
-	P2,          /*  3 - P2.5 */
-	P2,          /*  4 - P2.6 */
-	P2,          /*  5 - P2.1 */
-	P2,          /*  6 - P2.2 */
-	P3,          /*  7 - P3.4 */
-	P3,          /*  8 - P3.5 */
-	P3,          /*  9 - P3.6 */
-	P3,          /* 10 - P3.7 */
-	P1,          /* 11 - P1.6 */
-	P1,          /* 12 - P1.7 */
-	P1,          /* 13 - P1.0 */
-	P1,          /* 14 - P1.1 */
-	P1,          /* 15 - P1.2 */
-	P3,          /* 16 - P3.0 */
-	P3,          /* 17 - P3.1 */
-	P3,          /* 18 - P3.2 */
-	P3,          /* 19 - P3.3 */
-	P1,          /* 20 - P1.3 */
-	P1,          /* 21 - P1.4 */
-	P1,          /* 22 - P1.5 */
-	P4,          /* 23 - P4.0 */
-	NOT_A_PIN,   /* 24 - GND */
-	/* LED's */
-	PJ,          /* 25 PJ.0 - LED1 */
-	PJ,          /* 26 PJ.1 - LED2 */
-	PJ,          /* 27 PJ.2 - LED3 */
-	PJ,          /* 28 PJ.3 - LED4 */
-	P4,          /* 29 P4.1 - PUSH2 */
-	P2,          /* 30 P2.7 - ACC_ENABLE / NTC_ENABLE */
+	P1,			/*  1 - P1.0 */
+	P1,			/*  2 - P1.1 */
+	P1,			/*  3 - P1.2 */
+	P3,			/*  4 - P3.0 */
+	P3,			/*  5 - P3.1 */
+	P3,			/*  6 - P3.2 */
+	P3,			/*  7 - P3.3 */
+	P1,			/*  8 - P1.3 */
+	P1,			/*  9 - P1.4 */
+	P1,			/* 10 - P1.5 */
+	PJ,			/* 11 - PJ.0 */
+	PJ,			/* 12 - PJ.1 */
+	PJ,			/* 13 - PJ.2 */
+	PJ,			/* 14 - PJ.3 */
+	P4,			/* 15 - P4.0 */
+	P4,			/* 16 - P4.1 */
+	P2,			/* 17 - P2.5 */
+	P2,			/* 18 - P2.6 */
+	P2,			/* 19 - P2.0 */
+	P2,			/* 20 - P2.1 */
+	P2,			/* 21 - P2.2 */
+	P3,			/* 22 - P3.4 */
+	P3,			/* 23 - P3.5 */
+	P3,			/* 24 - P3.6 */
+	P3,			/* 25 - P3.7 */
+	P1,			/* 26 - P1.6 */
+	P1,			/* 27 - P1.7 */
+	P2,			/* 28 - P2.3 */
+	P2,			/* 29 - P2.4 */	
+	PJ,			/* 30 - PJ.4 */
+	PJ,			/* 31 - PJ.5 */
+
 };
 
 const uint8_t digital_pin_to_bit_mask[] = {
-	NOT_A_PIN,   /*  0 - pin count starts at 1 */
-	NOT_A_PIN,   /*  1 - VCC */
-	BV(0),       /*  2 - P2.0 */
-	BV(5),       /*  3 - P2.5 */
-	BV(6),       /*  4 - P2.6 */
-	BV(1),       /*  5 - P2.1 */
-	BV(2),       /*  6 - P2.2 */
-	BV(4),       /*  7 - P3.4 */
-	BV(5),       /*  8 - P3.5 */
-	BV(6),       /*  9 - P3.6 */
-	BV(7),       /* 10 - P3.7 */
-	BV(6),       /* 11 - P1.6 */
-	BV(7),       /* 12 - P1.7 */
-	BV(0),       /* 13 - P1.0 */
-	BV(1),       /* 14 - P1.1 */
-	BV(2),       /* 15 - P1.2 */
-	BV(0),       /* 16 - P3.0 */
-	BV(1),       /* 17 - P3.1 */
-	BV(2),       /* 18 - P3.2 */
-	BV(3),       /* 19 - P3.3 */
-	BV(3),       /* 20 - P1.3 */
-	BV(4),       /* 21 - P1.4 */
-	BV(5),       /* 22 - P1.5 */
-	BV(0),       /* 23 - P4.0 */
-	NOT_A_PIN,   /* 24 - GND  */
-	/* LED's 1 through 8 */
-	BV(0),       /* 25 - PJ.0 - LED1 */
-	BV(1),       /* 26 - PJ.1 - LED2 */
-	BV(2),       /* 27 - PJ.2 - LED3 */
-	BV(3),       /* 28 - PJ.3 - LED4 */
-	BV(1),       /* 29 - P4.1 - PUSH2 */
-	BV(7),       /* 30 - P2.7 - ACC_ENABLE / NTC_ENABLE */
+	NOT_A_PIN,  /*  0 - pin count starts at 1 */
+	BV(0),		/*  1 - P1.0 */
+	BV(1),		/*  2 - P1.1 */
+	BV(2),		/*  3 - P1.2 */
+	BV(0),		/*  4 - P3.0 */
+	BV(1),		/*  5 - P3.1 */
+	BV(2),		/*  6 - P3.2 */
+	BV(3),		/*  7 - P3.3 */
+	BV(3),		/*  8 - P1.3 */
+	BV(4),		/*  9 - P1.4 */
+	BV(5),		/* 10 - P1.5 */
+	BV(0),		/* 11 - PJ.0 */
+	BV(1),		/* 12 - PJ.1 */
+	BV(2),		/* 13 - PJ.2 */
+	BV(3),		/* 14 - PJ.3 */
+	BV(0),		/* 15 - P4.0 */
+	BV(1),		/* 16 - P4.1 */
+	BV(5),		/* 17 - P2.5 */
+	BV(6),		/* 18 - P2.6 */
+	BV(0),		/* 19 - P2.0 */
+	BV(1),		/* 20 - P2.1 */
+	BV(2),		/* 21 - P2.2 */
+	BV(4),		/* 22 - P3.4 */
+	BV(5),		/* 23 - P3.5 */
+	BV(6),		/* 24 - P3.6 */
+	BV(7),		/* 25 - P3.7 */
+	BV(6),		/* 26 - P1.6 */
+	BV(7),		/* 27 - P1.7 */
+	BV(3),		/* 28 - P2.3 */
+	BV(4),		/* 29 - P2.4 */	
+	BV(4),		/* 30 - PJ.4 */
+	BV(5),		/* 31 - PJ.5 */
 
 };
 
 const uint32_t digital_pin_to_analog_in[] = {
-        NOT_ON_ADC,     /*  dummy   */
-        NOT_ON_ADC,     /*  1 - 3.3V*/
-        NOT_ON_ADC,		/*  2 - P2.0 */
-        NOT_ON_ADC,		/*  3 - P2.5 */
-        NOT_ON_ADC,		/*  4 - P2.6 */
-        NOT_ON_ADC, 	/*  5 - P2.1 */
-        NOT_ON_ADC,		/*  6 - P2.2 */
-        NOT_ON_ADC,		/*  7 - P3.4 */
-        NOT_ON_ADC, 	/*  8 - P3.5 */
-        NOT_ON_ADC, 	/*  9 - P3.6 */
-        NOT_ON_ADC, 	/*  10 - P3.7 */
-        NOT_ON_ADC, 	/*  11 - P1.6 */
-        NOT_ON_ADC, 	/*  12 - P1.7 */
-        0,     			/*  13 - A9 (device analog channel 0) */
-        1,     			/*  14 - A8 (device analog channel 1) */
-        2, 				/*  15 - A7 (device analog channel 2) */
-        12,     		/*  16 - A6 (device analog channel 12) */
-        13, 			/*  17 - A5 (device analog channel 13) */
-        14, 			/*  18 - A4 (device analog channel 14) */
-        15, 			/*  19 - A3 (device analog channel 15) */
-        3, 				/*  20 - A2 (device analog channel 3) */
-        4,  			/*  21 - A1 (device analog channel 4) */
-        5,  			/*  22 - A0 (device analog channel 5) */	
-		NOT_ON_ADC,		/*  23 - P4.0 */
-		NOT_ON_ADC		/*  24 - NC */
+	NOT_ON_ADC,  /*  0 - pin count starts at 1 */
+	0			 /*  1 - P1.0 */
+	1,			 /*  2 - P1.1 */
+	2,			 /*  3 - P1.2 */
+	12,			 /*  4 - P3.0 */
+	13,		 	 /*  5 - P3.1 */
+	14,			 /*  6 - P3.2 */
+	15,			 /*  7 - P3.3 */
+	3,			 /*  8 - P1.3 */
+	4,			 /*  9 - P1.4 */
+	5,			 /* 10 - P1.5 */
+	NOT_ON_ADC,	 /* 11 - PJ.0 */
+	NOT_ON_ADC,  /* 12 - PJ.1 */
+	NOT_ON_ADC,	 /* 13 - PJ.2 */
+	NOT_ON_ADC,	 /* 14 - PJ.3 */
+	NOT_ON_ADC,	 /* 15 - P4.0 */
+	NOT_ON_ADC,	 /* 16 - P4.1 */
+	NOT_ON_ADC,	 /* 17 - P2.5 */
+	NOT_ON_ADC,	 /* 18 - P2.6 */
+	NOT_ON_ADC,	 /* 19 - P2.0 */
+	NOT_ON_ADC,	 /* 20 - P2.1 */
+	NOT_ON_ADC,	 /* 21 - P2.2 */
+	NOT_ON_ADC,	 /* 22 - P3.4 */
+	NOT_ON_ADC,	 /* 23 - P3.5 */
+	NOT_ON_ADC,	 /* 24 - P3.6 */
+	NOT_ON_ADC,	 /* 25 - P3.7 */
+	NOT_ON_ADC,	 /* 26 - P1.6 */
+	NOT_ON_ADC,	 /* 27 - P1.7 */
+	6,			 /* 28 - P2.3 */
+	7,			 /* 29 - P2.4 */	
+	NOT_ON_ADC,	 /* 30 - PJ.4 */
+	NOT_ON_ADC	 /* 31 - PJ.5 */
 };
 #endif
 #endif
